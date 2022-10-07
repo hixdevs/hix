@@ -10,6 +10,17 @@ require "tty-prompt"
 require "yaml"
 require "zip"
 
+require_relative "hix/config"
 require_relative "hix/version"
 
-module Hix; end
+module Hix
+  class << self
+    def config
+      @config ||= Config.new
+    end
+
+    def configure
+      yield(config)
+    end
+  end
+end
