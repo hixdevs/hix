@@ -18,7 +18,6 @@ Gem::Specification.new do |s|
   s.files = Dir.glob("{assets,lib}/**/*", File::FNM_DOTMATCH)
   s.bindir = "exe"
   s.executables = ["hix"]
-  s.extra_rdoc_files = ["LICENSE.txt", "README.md"]
   s.homepage = "https://hix.dev"
   s.licenses = ["GPL-3.0"]
   s.summary = "The hix.dev ruby API client and a progamming files rendering tool"
