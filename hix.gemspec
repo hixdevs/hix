@@ -31,15 +31,16 @@ Gem::Specification.new do |s|
     "rubygems_mfa_required" => "true",
   }
 
+  s.add_runtime_dependency("activesupport", "~> 7.0")
   s.add_runtime_dependency("fileutils", "~> 1.6")
   s.add_runtime_dependency("httparty", "~> 0.20")
   s.add_runtime_dependency("json", "~> 2.6")
   s.add_runtime_dependency("open-uri", "~> 0.2")
   s.add_runtime_dependency("pry", "~> 0.14")
+  s.add_runtime_dependency("rubyzip", "~> 2.3")
   s.add_runtime_dependency("thor", "~> 1.2")
   s.add_runtime_dependency("tty-prompt", "~> 0.23")
   s.add_runtime_dependency("yaml", "~> 0.2")
-  s.add_runtime_dependency("zip", "~> 2.0")
 
   s.add_development_dependency("fasterer", "~> 0.10")
   s.add_development_dependency("rspec", "~> 3.11")

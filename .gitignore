@@ -49,3 +49,6 @@ coverage.data
 
 ## JetBrains
 .idea
+
+## Dotenv
+.env.local

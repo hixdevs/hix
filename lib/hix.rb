@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "active_support/all"
 require "fileutils"
 require "httparty"
 require "json"
@@ -10,17 +11,8 @@ require "tty-prompt"
 require "yaml"
 require "zip"
 
-require_relative "hix/config"
+require_relative "hix/api"
+require_relative "hix/lib"
 require_relative "hix/version"
 
-module Hix
-  class << self
-    def config
-      @config ||= Config.new
-    end
-
-    def configure
-      yield(config)
-    end
-  end
-end
+module Hix; end
