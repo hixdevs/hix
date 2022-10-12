@@ -15,4 +15,12 @@ require_relative "hix/api"
 require_relative "hix/lib"
 require_relative "hix/version"
 
-module Hix; end
+module Hix
+  CONFIG = if File.exist?("#{ENV['HOME']}/.hixdev/config")
+             YAML.load(File.read("#{ENV['HOME']}/.hixdev/config")).with_indifferent_access
+           else
+             {
+               api: "https://api.hix.dev/api/v1",
+             }
+           end
+end

@@ -14,7 +14,9 @@ module Hix
       def credentials
         return unless File.exist?(Hix::Exe::CREDENTIALS_PATH)
 
+        # rubocop:disable Security/YAMLLoad
         JSON.parse(YAML.load(File.read(Hix::Exe::CREDENTIALS_PATH)).to_json, symbolize_names: true)
+        # rubocop:enable Security/YAMLLoad
       end
 
       def auth_token

@@ -67,9 +67,7 @@ module Hix
       end
 
       def require_template_files
-        Dir["#{cache_version}/**/*.rb"].reject do |file|
-          file.include?("/templates/") || file.include?("/template.rb")
-        end.each { |file| require file }
+        Dir["#{cache_version}/**/*.rb"].reject { |file| file.include?("/templates/") }.each { |file| require file }
       end
 
       def run_template

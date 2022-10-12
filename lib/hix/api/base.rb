@@ -9,13 +9,7 @@ module Hix
       end
 
       def url
-        "http://localhost:3000/api/v1"
-        # case Hix::Config.env
-        # when :localhost
-        #   "http://localhost:#{Hix::Config.api_port}/api/v1"
-        # when :dev, :stg, :u00, :u01, :u02
-        #   "https://#{Hix::Config.env}.hix.dev/api/v1"
-        # end
+        Hix::CONFIG[:api]
       end
 
       def headers
