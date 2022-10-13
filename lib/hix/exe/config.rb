@@ -4,25 +4,23 @@ module Hix
   module Exe
     class Config < Hix::Exe::Base
       def initialize(env: nil)
-        @env = Hix::ENVS[env] || TTY::Prompt.new.select("Env:") do |menu|
+        @env = (Hix::ENVS.key?(env) && env) || TTY::Prompt.new.select("Env:") do |menu|
           menu.default("prd")
-          menu.choice("prd", Hix::ENVS["prd"])
-          menu.choice("stg", Hix::ENVS["stg"])
-          menu.choice("dev", Hix::ENVS["dev"])
-          menu.choice("u00", Hix::ENVS["u00"])
-          menu.choice("u01", Hix::ENVS["u01"])
-          menu.choice("u02", Hix::ENVS["u02"])
-          menu.choice("local", Hix::ENVS["local"])
+          menu.choice("prd")
+          menu.choice("stg")
+          menu.choice("dev")
+          menu.choice("u00")
+          menu.choice("u01")
+          menu.choice("u02")
+          menu.choice("local")
         end
-        if @env == Hix::ENVS["local"]
-          port = TTY::Prompt.new.ask("API port:", default: 3000) do |answer|
+        if @env == "local"
+          @port = TTY::Prompt.new.ask("API port:", default: 3000) do |answer|
             answer.modify(:remove)
             answer.in("1-65535")
-            answer.messages[:range?] = "%{value} out of allowed port range %{in}"
+            answer.messages[:range?] = "%{value}s out of allowed port range %{in}s"
           end
-          @env = "#{@env}:#{port}"
         end
-        @env = "#{@env}/api/v1"
         super
       end
 
@@ -33,10 +31,24 @@ module Hix
 
       private
 
-      attr_reader :env
+      attr_reader :env, :port
 
       def config
-        { "api" => env }
+        api = Hix::ENVS[env]
+        api = "#{api}:#{port}" if env == "local"
+        api = "#{api}/api/v1"
+
+        {
+          "env" => env,
+          "api" => api,
+          "dsn" => Hix::DSNS[env],
+        }
+      end
+
+      def api
+        api = Hix::ENVS[env]
+        api = "#{api}:#{port}" if env == "local"
+        "#{api}/api/v1"
       end
     end
   end

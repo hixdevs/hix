@@ -84,18 +84,20 @@ module Hix
 
       def failure(error)
         reset("#{error.class}: #{error.message}")
-        binding.pry
+        # TODO:
+        # return if Hix::CONFIG[:dsn].nil?
 
         # Sentry.init do |config|
-        #   # TODO: return dsn from API?
-        #   config.dsn = ENV["SENTRY_DSN"]
+        #   config.dsn = Hix::CONFIG[:dsn]
+        #   config.environment = Hix::CONFIG[:env]
+        #   config.release = Hix::Version::STRING
         #   config.traces_sample_rate = 1.0
         # end
         # Sentry.capture_exception(e)
       end
 
       def cleanup
-        # FileUtils.rm_rf(version_cache_path)
+        FileUtils.rm_rf(version_cache_path)
       end
 
       def start

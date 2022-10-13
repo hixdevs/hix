@@ -15,8 +15,8 @@ module Hix
   end
 end
 
-FileUtils.mkdir_p("#{ENV['HOME']}/.hixdev/cache")
-FileUtils.mkdir_p("#{ENV['HOME']}/.hixdev/build")
+FileUtils.mkdir_p("#{Dir.home}/.hixdev/cache")
+FileUtils.mkdir_p("#{Dir.home}/.hixdev/build")
 
 case ARGV[0]
 when Hix::Exe::CONFIG

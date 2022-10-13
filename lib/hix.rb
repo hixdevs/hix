@@ -15,13 +15,13 @@ require_relative "hix/api"
 require_relative "hix/lib"
 require_relative "hix/version"
 
-CONFIG_PATH = "#{ENV['HOME']}/.hixdev/config"
+CONFIG_PATH = "#{Dir.home}/.hixdev/config"
 
 module Hix
-  BUILD_PATH = "#{ENV['HOME']}/.hixdev/build"
-  CONFIG_PATH = "#{ENV['HOME']}/.hixdev/config"
-  CACHE_PATH = "#{ENV['HOME']}/.hixdev/cache"
-  CREDENTIALS_PATH = "#{ENV['HOME']}/.hixdev/credentials"
+  BUILD_PATH = "#{Dir.home}/.hixdev/build"
+  CONFIG_PATH = "#{Dir.home}/.hixdev/config"
+  CACHE_PATH = "#{Dir.home}/.hixdev/cache"
+  CREDENTIALS_PATH = "#{Dir.home}/.hixdev/credentials"
   ENVS = {
     "prd" => "https://api.hix.dev",
     "dev" => "https://api.dev.hix.dev",
@@ -32,9 +32,10 @@ module Hix
     "local" => "http://localhost",
   }.freeze
   CONFIG = if File.exist?(CONFIG_PATH)
-             YAML.load(File.read(CONFIG_PATH)).with_indifferent_access
+             YAML.safe_load(File.read(CONFIG_PATH)).with_indifferent_access
            else
              {
+               env: "prd",
                api: "https://api.hix.dev/api/v1",
              }
            end
