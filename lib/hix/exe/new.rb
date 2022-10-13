@@ -40,7 +40,7 @@ module Hix
       end
 
       def persist_options
-        File.write("#{Hix::Exe::BUILD_PATH}/#{uuid}.yml", start["data"].to_yaml)
+        File.write("#{Hix::BUILD_PATH}/#{uuid}.yml", start["data"].to_yaml)
       end
 
       def cache_template_files
@@ -59,7 +59,7 @@ module Hix
       end
 
       def template_cache_path
-        "#{Hix::Exe::CACHE_PATH}/#{template}"
+        "#{Hix::CACHE_PATH}/#{template}"
       end
 
       def version_cache_path
@@ -84,6 +84,7 @@ module Hix
 
       def failure(error)
         reset("#{error.class}: #{error.message}")
+        binding.pry
 
         # Sentry.init do |config|
         #   # TODO: return dsn from API?

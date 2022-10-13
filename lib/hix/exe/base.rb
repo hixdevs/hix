@@ -12,10 +12,10 @@ module Hix
       attr_reader :log
 
       def credentials
-        return unless File.exist?(Hix::Exe::CREDENTIALS_PATH)
+        return unless File.exist?(Hix::CREDENTIALS_PATH)
 
         # rubocop:disable Security/YAMLLoad
-        JSON.parse(YAML.load(File.read(Hix::Exe::CREDENTIALS_PATH)).to_json, symbolize_names: true)
+        JSON.parse(YAML.load(File.read(Hix::CREDENTIALS_PATH)).to_json, symbolize_names: true)
         # rubocop:enable Security/YAMLLoad
       end
 

@@ -3,14 +3,14 @@
 module Hix
   module Lib
     class Printer
-      TEMPLATES_PATH = File.join(File.dirname(__FILE__), "/templates")
+      # TEMPLATES_PATH = File.join(File.dirname(__FILE__), "/templates")
       EXTENSION = ".erb"
 
-      def initialize(path:, args: {})
-        @path = "#{args.app_name.underscore.downcase}/#{path}"
+      def initialize(root:, path:, args: {})
+        @path = "#{args.app_dir}/#{path}"
         @args = args
         @talk = Thor::Shell::Color.new
-        @template = ERB.new(File.read(File.join(TEMPLATES_PATH, "#{path}#{EXTENSION}")), trim_mode: "-")
+        @template = ERB.new(File.read(File.join(root, "templates", "#{path}#{EXTENSION}")), trim_mode: "-")
       end
 
       def render

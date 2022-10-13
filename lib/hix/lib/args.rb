@@ -3,8 +3,8 @@
 module Hix
   module Lib
     class Args
-      # include ::Hix::Lib::DefaultsDB
-      # include ::Hix::Lib::DefaultsSMTP
+      include Hix::Lib::Data::DB
+      include Hix::Lib::Data::SMTP
 
       attr_reader :app_name, :engines, :products
 

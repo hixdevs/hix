@@ -2,6 +2,6 @@
 
 module Hix
   class Version
-    STRING = "0.0.15"
+    STRING = "0.0.22"
   end
 end
