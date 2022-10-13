@@ -9,7 +9,7 @@ module Hix
       end
 
       def call
-        log.say_status(:ok, "New project: #{uuid}", :green)
+        log.say_status(:begin, "Started: hix new #{uuid}", :green)
         login if credentials.nil?
         return reset(start_errors) if start.code != 200
 
@@ -44,13 +44,13 @@ module Hix
       end
 
       def cache_template_files
-        return if Dir.exist?(cache_version)
+        return if Dir.exist?(version_cache_path)
 
-        FileUtils.mkdir_p(cache_version)
+        FileUtils.mkdir_p(version_cache_path)
         zip_url = "#{Hix::API::Base.new.url}/templates/#{template}/filename?#{zip_querystring}"
-        zip_path = "#{cache_version}.zip"
+        zip_path = "#{version_cache_path}.zip"
         IO.copy_stream(URI.open(zip_url), zip_path)
-        Zip::File.open(zip_path) { |zip| zip.each { |file| zip.extract(file, "#{cache_template}/#{file.name}") } }
+        Zip::File.open(zip_path) { |zip| zip.each { |file| zip.extract(file, "#{template_cache_path}/#{file.name}") } }
         FileUtils.rm_rf(zip_path)
       end
 
@@ -58,32 +58,32 @@ module Hix
         "filename=#{version}.zip&project=#{uuid}&auth=#{auth_token}"
       end
 
-      def cache_template
+      def template_cache_path
         "#{Hix::Exe::CACHE_PATH}/#{template}"
       end
 
-      def cache_version
-        "#{cache_template}/#{version}"
+      def version_cache_path
+        "#{template_cache_path}/#{version}"
       end
 
       def require_template_files
-        Dir["#{cache_version}/**/*.rb"].reject { |file| file.include?("/templates/") }.each { |file| require file }
+        Dir["#{version_cache_path}/**/*.rb"].reject { |file| file.include?("/templates/") }.each { |file| require file }
       end
 
       def run_template
         Hix::New.new(
           args: Hix::Lib::Args.new(start["data"]),
-          root: cache_version,
+          root: version_cache_path,
         ).run
       end
 
       def finish_project
         Hix::API::Finish.new(**tokens).request(id: uuid)
+        log.say_status(:done, "Completed: hix new #{uuid}", :green)
       end
 
       def failure(error)
         reset("#{error.class}: #{error.message}")
-        return if version == "0.0.0"
 
         # Sentry.init do |config|
         #   # TODO: return dsn from API?
@@ -94,7 +94,7 @@ module Hix
       end
 
       def cleanup
-        FileUtils.rm_rf(cache_version) if version != "0.0.0"
+        # FileUtils.rm_rf(version_cache_path)
       end
 
       def start
