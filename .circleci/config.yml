@@ -39,8 +39,8 @@ jobs:
       - run:
           name: Publish to RubyGems
           command: |
-            gem build rubocop_hixonrails.gemspec --backtrace --strict --verbose
-            gem push "rubocop-hixonrails-$(git describe --abbrev=0).gem"
+            gem build hix.gemspec --backtrace --strict --verbose
+            gem push "hix-$(cat VERSION).gem"
 workflows:
   version: 2
   cicd:
