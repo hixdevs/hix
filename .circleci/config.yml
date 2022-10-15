@@ -37,7 +37,8 @@ jobs:
             echo ":rubygems_api_key: $RUBYGEMS_API_KEY" > ~/.gem/credentials
             chmod 0600 ~/.gem/credentials
             gem build hix.gemspec --backtrace --strict --verbose
-            gem install --development hix-*.gem
+            gem install hix-*.gem
+            hix version
             gem push hix-*.gem
 workflows:
   version: 2
