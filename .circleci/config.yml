@@ -1,0 +1,53 @@
+version: 2.1
+executors:
+  default:
+    working_directory: ~/hix
+    docker:
+      - image: cimg/ruby:3.1.0
+        environment:
+          BUNDLE_PATH: vendor/bundle
+jobs:
+  ci:
+    executor: default
+    steps:
+      - checkout
+      - run:
+          name: Install Bundler
+          command: gem install bundler:2.3.23
+      - run:
+          name: Bundle install
+          command: bundle install --path vendor/bundle
+      - run:
+          name: Gem build
+          command: gem build hix.gemspec --backtrace --strict --verbose
+      - run:
+          name: Fasterer
+          command: bundle exec fasterer
+      - run:
+          name: Rubocop
+          command: bundle exec rubocop
+  cd:
+    executor: default
+    steps:
+      - checkout
+      - run:
+          name: Setup RubyGems
+          command: |
+            mkdir ~/.gem
+            echo "---\r\n:rubygems_api_key: $RUBYGEMS_API_KEY" > ~/.gem/credentials
+            chmod 0600 ~/.gem/credentials
+      - run:
+          name: Publish to RubyGems
+          command: |
+            gem build rubocop_hixonrails.gemspec --backtrace --strict --verbose
+            gem push "rubocop-hixonrails-$(git describe --abbrev=0).gem"
+workflows:
+  version: 2
+  cicd:
+    jobs:
+      - ci
+      - cd:
+          context: rubygems
+          filters:
+            branches:
+              only: prd
