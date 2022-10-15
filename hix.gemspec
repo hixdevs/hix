@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   DESCRIPTION
 
   s.email = "hix.dev@tzif.io"
-  s.files = Dir.glob("{assets,lib}/**/*", File::FNM_DOTMATCH)
+  s.files = Dir.glob("{assets,lib}/**/*", File::FNM_DOTMATCH) + %w[VERSION]
   s.bindir = "exe"
   s.executables = ["hix"]
   s.homepage = "https://hix.dev"
