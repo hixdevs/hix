@@ -84,7 +84,7 @@ module Hix
 
       def failure(error)
         reset("#{error.class}: #{error.message}")
-        # TODO:
+        # TODO: use DSN defined in template files
         # return if Hix::CONFIG[:dsn].nil?
 
         # Sentry.init do |config|
