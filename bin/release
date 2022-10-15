@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+tag = ARGV[0].chomp
+system("git checkout dev")
+system("git branch release/#{tag}")
+system("git push --set-upstream origin release/#{tag}")
+system("git checkout release/#{tag}")
+File.write("VERSION", tag)
+system("git add VERSION")
+system("git commit -m '#{tag} - UPD version file'")
+system("git push")
+system("git tag #{tag}")
+system("git push origin #{tag}")
+system("gem build hix.gemspec")
+system("gem push hix-#{tag}.gem")

@@ -2,6 +2,6 @@
 
 module Hix
   class Version
-    STRING = "0.0.25"
+    STRING = File.read("./VERSION")
   end
 end
