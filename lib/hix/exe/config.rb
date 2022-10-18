@@ -41,7 +41,7 @@ module Hix
         {
           "env" => env,
           "api" => api,
-          "dsn" => Hix::DSNS[env],
+          # "dsn" => Hix::DSNS[env],
         }
       end
 
