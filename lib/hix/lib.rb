@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "lib/data/db"
-require_relative "lib/data/smtp"
-require_relative "lib/args"
-require_relative "lib/printer"
+Dir[__FILE__.sub(/\.rb$/, "/data/*.rb").to_s].sort.each { |rb| require rb }
+Dir[__FILE__.sub(/\.rb$/, "/**/*.rb").to_s].sort.each { |rb| require rb }
 
 module Hix
   module Lib; end

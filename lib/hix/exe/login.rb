@@ -6,13 +6,12 @@ module Hix
       def initialize(email: nil, password: nil)
         @email = email || TTY::Prompt.new.ask("Email:")
         @password = password || TTY::Prompt.new.mask("Password:")
-        super
       end
 
       def call
-        log(:begin, "Loging in")
+        out("Loging in", :begin)
         File.write(Hix::CREDENTIALS_PATH, credentials.to_yaml)
-        log(:done, "Saved: #{Hix::CREDENTIALS_PATH}")
+        out("Saved: #{Hix::CREDENTIALS_PATH}", :done)
       end
 
       private
