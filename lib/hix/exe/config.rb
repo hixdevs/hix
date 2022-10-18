@@ -4,6 +4,7 @@ module Hix
   module Exe
     class Config < Hix::Exe::Base
       def initialize(env: nil)
+        log(:begin, "Configuring hix")
         @env = (Hix::ENVS.key?(env) && env) || TTY::Prompt.new.select("Env:") do |menu|
           menu.default("prd")
           menu.choice("prd")
@@ -26,7 +27,7 @@ module Hix
 
       def write
         File.write(Hix::CONFIG_PATH, config.to_yaml)
-        log.say_status(:done, "Activated: #{env}", :green)
+        log(:done, "Activated: #{env}")
       end
 
       private

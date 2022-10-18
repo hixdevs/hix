@@ -9,7 +9,7 @@ module Hix
       end
 
       def call
-        log.say_status(:begin, "Started: hix new #{uuid}", :green)
+        log(:begin, "Started: hix new #{uuid}")
         login if credentials.nil?
         return reset(start_errors) if start.code != 200
 
@@ -36,7 +36,7 @@ module Hix
 
       def reset(message)
         Hix::API::Reset.new(**tokens).request(id: uuid)
-        log.say_status(:error, message, :red)
+        log(:error, message, :red)
       end
 
       def persist_options
@@ -79,7 +79,7 @@ module Hix
 
       def finish_project
         Hix::API::Finish.new(**tokens).request(id: uuid)
-        log.say_status(:done, "Completed: hix new #{uuid}", :green)
+        log(:done, "Completed: hix new #{uuid}")
       end
 
       def failure(error)
