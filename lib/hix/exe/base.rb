@@ -3,9 +3,7 @@
 module Hix
   module Exe
     class Base
-      def initialize(*_args)
-        @log = Thor::Shell::Color.new
-      end
+      include Hix::Lib::System
 
       private
 

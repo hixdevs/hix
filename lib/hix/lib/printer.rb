@@ -3,13 +3,13 @@
 module Hix
   module Lib
     class Printer
-      # TEMPLATES_PATH = File.join(File.dirname(__FILE__), "/templates")
+      include Hix::Lib::System
+
       EXTENSION = ".erb"
 
       def initialize(root:, path:, args: {})
         @path = "#{args.app_dir}/#{path}"
         @args = args
-        @talk = Thor::Shell::Color.new
         @template = ERB.new(File.read(File.join(root, "templates", "#{path}#{EXTENSION}")), trim_mode: "-")
       end
 
@@ -22,7 +22,7 @@ module Hix
 
       private
 
-      attr_reader :talk, :path, :template, :args
+      attr_reader :path, :template, :args
 
       def overwrite?
         return @overwrite if defined?(@overwrite)
@@ -56,7 +56,7 @@ module Hix
       end
 
       def info(tag, message)
-        talk.say_status(tag, message, :green)
+        log(tag, message)
       end
 
       def extended_path

@@ -28,5 +28,5 @@ when Hix::Exe::NEW
 when Hix::Exe::VERSION
   puts Hix::Version::STRING
 else
-  log.say_status(:error, "command does not exist", :red)
+  Thor::Shell::Color.new.say_status(:error, "command does not exist", :red)
 end
