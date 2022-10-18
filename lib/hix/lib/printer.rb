@@ -3,7 +3,7 @@
 module Hix
   module Lib
     class Printer
-      include Hix::Lib::System
+      include Hix::Sh
 
       EXTENSION = ".erb"
 
@@ -56,7 +56,7 @@ module Hix
       end
 
       def info(tag, message)
-        log(tag, message)
+        out(message, tag)
       end
 
       def extended_path

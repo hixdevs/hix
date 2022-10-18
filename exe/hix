@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift("#{__dir__}/../lib")
+$LOAD_PATH.unshift(__dir__.sub(/exe$/, "lib"))
 
+require "hix"
 require "hix/exe"
+
+Hix::Exe::Init.new(ARGV).run

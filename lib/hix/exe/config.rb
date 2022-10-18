@@ -4,7 +4,7 @@ module Hix
   module Exe
     class Config < Hix::Exe::Base
       def initialize(env: nil)
-        log(:begin, "Configuring hix")
+        out("Configuring hix", :begin)
         @env = (Hix::ENVS.key?(env) && env) || TTY::Prompt.new.select("Env:") do |menu|
           menu.default("prd")
           menu.choice("prd")
@@ -15,19 +15,18 @@ module Hix
           menu.choice("u02")
           menu.choice("local")
         end
-        if @env == "local"
-          @port = TTY::Prompt.new.ask("API port:", default: 3000) do |answer|
-            answer.modify(:remove)
-            answer.in("1-65535")
-            answer.messages[:range?] = "%{value}s out of allowed port range %{in}s"
-          end
+        return unless @env == "local"
+
+        @port = TTY::Prompt.new.ask("API port:", default: 3000) do |answer|
+          answer.modify(:remove)
+          answer.in("1-65535")
+          answer.messages[:range?] = "%{value}s out of allowed port range %{in}s"
         end
-        super
       end
 
       def write
         File.write(Hix::CONFIG_PATH, config.to_yaml)
-        log(:done, "Activated: #{env}")
+        out("Activated: #{env}", :done)
       end
 
       private
@@ -42,7 +41,7 @@ module Hix
         {
           "env" => env,
           "api" => api,
-          "dsn" => Hix::DSNS[env],
+          # "dsn" => Hix::DSNS[env],
         }
       end
 

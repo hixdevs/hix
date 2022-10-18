@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2022-10-18
+### Added
+- error system logs
+### Updated
+- system command log to out
+- high-level require to parse directories instead of requiring line by line
+- exe/hix to call a class instead of execute the inline code
+### Fixed
+- requiring system calls module
+
 ## [0.2.0] - 2022-10-18
 ### Added
 - module with system calls and stdout logs
