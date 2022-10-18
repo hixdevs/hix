@@ -10,9 +10,9 @@ module Hix
       end
 
       def call
-        log.say_status(:ok, "Loging in", :green)
+        log(:begin, "Loging in")
         File.write(Hix::CREDENTIALS_PATH, credentials.to_yaml)
-        log.say_status(:ok, "Saved: #{Hix::CREDENTIALS_PATH}", :green)
+        log(:done, "Saved: #{Hix::CREDENTIALS_PATH}")
       end
 
       private
