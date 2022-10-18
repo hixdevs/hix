@@ -5,11 +5,10 @@ module Hix
     class New < Hix::Exe::Base
       def initialize(uuid: nil)
         @uuid = uuid || TTY::Prompt.new.ask("Project UUID:")
-        super
       end
 
       def call
-        log(:begin, "Started: hix new #{uuid}")
+        out("Started: hix new #{uuid}", :begin)
         login if credentials.nil?
         return reset(start_errors) if start.code != 200
 
@@ -36,7 +35,7 @@ module Hix
 
       def reset(message)
         Hix::API::Reset.new(**tokens).request(id: uuid)
-        log(:error, message, :red)
+        err(message)
       end
 
       def persist_options
@@ -79,7 +78,7 @@ module Hix
 
       def finish_project
         Hix::API::Finish.new(**tokens).request(id: uuid)
-        log(:done, "Completed: hix new #{uuid}")
+        out("Completed: hix new #{uuid}", :done)
       end
 
       def failure(error)

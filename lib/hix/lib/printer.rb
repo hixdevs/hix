@@ -56,7 +56,7 @@ module Hix
       end
 
       def info(tag, message)
-        log(tag, message)
+        out(message, tag)
       end
 
       def extended_path

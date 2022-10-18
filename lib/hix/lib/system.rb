@@ -4,10 +4,14 @@ module Hix
   module Lib
     module System
       def sh(cmd)
-        `#{cmd}`
+        `#{cmd}`&.chomp
       end
 
-      def log(label, message, color = :blue)
+      def out(message, label = :status, color = :green)
+        thor.say_status(label, message, color)
+      end
+
+      def err(message, label = :error, color = :red)
         thor.say_status(label, message, color)
       end
 

@@ -4,7 +4,7 @@ module Hix
   module Exe
     class Config < Hix::Exe::Base
       def initialize(env: nil)
-        log(:begin, "Configuring hix")
+        out("Configuring hix", :begin)
         @env = (Hix::ENVS.key?(env) && env) || TTY::Prompt.new.select("Env:") do |menu|
           menu.default("prd")
           menu.choice("prd")
@@ -22,12 +22,11 @@ module Hix
             answer.messages[:range?] = "%{value}s out of allowed port range %{in}s"
           end
         end
-        super
       end
 
       def write
         File.write(Hix::CONFIG_PATH, config.to_yaml)
-        log(:done, "Activated: #{env}")
+        out("Activated: #{env}", :done)
       end
 
       private
