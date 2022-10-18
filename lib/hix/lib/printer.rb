@@ -3,7 +3,7 @@
 module Hix
   module Lib
     class Printer
-      include Hix::Lib::System
+      include Hix::Sh
 
       EXTENSION = ".erb"
 

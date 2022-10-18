@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "api/base"
-require_relative "api/finish"
-require_relative "api/reset"
-require_relative "api/sign_in"
-require_relative "api/start"
+Dir[__FILE__.sub(/\.rb$/, "/**/*.rb").to_s].sort.each { |rb| require rb }
 
 module Hix
   module API; end

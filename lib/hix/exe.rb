@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "../hix"
-require_relative "exe/base"
-require_relative "exe/config"
-require_relative "exe/login"
-require_relative "exe/new"
+Dir[__FILE__.sub(/\.rb$/, "/**/*.rb").to_s].sort.each { |rb| require rb }
 
 module Hix
   module Exe
@@ -13,20 +9,4 @@ module Hix
     NEW = "new"
     VERSION = "version"
   end
-end
-
-FileUtils.mkdir_p("#{Dir.home}/.hixdev/cache")
-FileUtils.mkdir_p("#{Dir.home}/.hixdev/build")
-
-case ARGV[0]
-when Hix::Exe::CONFIG
-  Hix::Exe::Config.new(env: ARGV[1]&.chomp).write
-when Hix::Exe::LOGIN
-  Hix::Exe::Login.new(email: ARGV[1]&.chomp, password: ARGV[2]&.chomp).call
-when Hix::Exe::NEW
-  Hix::Exe::New.new(uuid: ARGV[1]&.chomp).call
-when Hix::Exe::VERSION
-  puts Hix::Version::STRING
-else
-  Thor::Shell::Color.new.say_status(:error, "command does not exist", :red)
 end

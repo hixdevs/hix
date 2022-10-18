@@ -15,12 +15,12 @@ module Hix
           menu.choice("u02")
           menu.choice("local")
         end
-        if @env == "local"
-          @port = TTY::Prompt.new.ask("API port:", default: 3000) do |answer|
-            answer.modify(:remove)
-            answer.in("1-65535")
-            answer.messages[:range?] = "%{value}s out of allowed port range %{in}s"
-          end
+        return unless @env == "local"
+
+        @port = TTY::Prompt.new.ask("API port:", default: 3000) do |answer|
+          answer.modify(:remove)
+          answer.in("1-65535")
+          answer.messages[:range?] = "%{value}s out of allowed port range %{in}s"
         end
       end
 

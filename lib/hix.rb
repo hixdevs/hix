@@ -11,6 +11,7 @@ require "tty-prompt"
 require "yaml"
 require "zip"
 
+require_relative "hix/sh"
 require_relative "hix/api"
 require_relative "hix/lib"
 require_relative "hix/version"

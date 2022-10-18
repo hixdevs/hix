@@ -3,7 +3,7 @@
 module Hix
   module Exe
     class Base
-      include Hix::Lib::System
+      include Hix::Sh
 
       private
 
