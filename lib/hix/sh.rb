@@ -3,7 +3,7 @@
 module Hix
   module Sh
     def sh(cmd)
-      `#{cmd}`&.chomp
+      Kernel.`(cmd)&.chomp
     end
 
     def out(message, label = :status, color = :green)
