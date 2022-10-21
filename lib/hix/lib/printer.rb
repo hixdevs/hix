@@ -16,7 +16,7 @@ module Hix
       def render
         create_subdirectories
         delete_file
-        info(write_tag, path)
+        out(path, tag, color)
         File.write(extended_path, content)
       end
 
@@ -30,8 +30,12 @@ module Hix
         @overwrite = File.exist?(path)
       end
 
-      def write_tag
-        "#{overwrite? ? 'over' : ''}write"
+      def tag
+        overwrite? ? :update : :create
+      end
+
+      def color
+        overwrite? ? :blue : :green
       end
 
       def content
@@ -41,7 +45,7 @@ module Hix
       def create_subdirectories
         return unless !subdirectories.empty? && !File.exist?(subdirectories)
 
-        info(:create, "#{subdirectories}/")
+        out("#{subdirectories}/", :create, :green)
         FileUtils.mkdir_p(subdirectories)
       end
 
@@ -53,10 +57,6 @@ module Hix
 
       def delete_file
         File.delete(path) if overwrite?
-      end
-
-      def info(tag, message)
-        out(message, tag)
       end
 
       def extended_path
