@@ -2,10 +2,6 @@
 
 module Hix
   module Sh
-    def sh(cmd)
-      Kernel.`(cmd)&.chomp
-    end
-
     def out(message, label = :status, color = :green)
       thor.say_status(label, message, color)
     end
@@ -16,6 +12,14 @@ module Hix
 
     def thor
       @thor ||= Thor::Shell::Color.new
+    end
+
+    def sys(cmd)
+      Kernel.system(cmd)
+    end
+
+    def sh(cmd)
+      Kernel.`(cmd)&.chomp
     end
   end
 end
