@@ -96,6 +96,8 @@ module Hix
       end
 
       def cleanup
+        return if Hix::CONFIG["env"] == "local"
+
         FileUtils.rm_rf(version_cache_path)
       end
 
