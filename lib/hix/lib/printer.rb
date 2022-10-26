@@ -16,7 +16,7 @@ module Hix
       def render
         create_subdirectories
         delete_file
-        out(path, tag, color)
+        out(path.sub("#{args.app_dir}/", ""), tag, color)
         File.write(extended_path, content)
       end
 
