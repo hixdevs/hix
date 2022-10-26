@@ -49,8 +49,13 @@ module Hix
         zip_url = "#{Hix::API::Base.new.url}/templates/#{template}/filename?#{zip_querystring}"
         zip_path = "#{version_cache_path}.zip"
         IO.copy_stream(URI.open(zip_url), zip_path)
-        Zip::File.open(zip_path) { |zip| zip.each { |file| zip.extract(file, "#{template_cache_path}/#{file.name}") } }
-        FileUtils.rm_rf(zip_path)
+        Zip::File.open(zip_path) do |zip|
+          zip.each do |file|
+            FileUtils.mkdir_p("#{template_cache_path}/#{file.name[0..file.name.rindex('/')]}")
+            zip.extract(file, "#{template_cache_path}/#{file.name}")
+          end
+        end
+        # FileUtils.rm_rf(zip_path)
       end
 
       def zip_querystring
