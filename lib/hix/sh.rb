@@ -10,6 +10,10 @@ module Hix
       thor.say_status(label, message, color)
     end
 
+    def bold(string)
+      "\033[1m#{string}\033[0m"
+    end
+
     def thor
       @thor ||= Thor::Shell::Color.new
     end

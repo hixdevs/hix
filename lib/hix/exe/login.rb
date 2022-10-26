@@ -12,6 +12,8 @@ module Hix
         out("Loging in", :begin)
         File.write(Hix::CREDENTIALS_PATH, credentials.to_yaml)
         out("Saved: #{Hix::CREDENTIALS_PATH}", :done)
+      rescue StandardError => e
+        err("#{e.class}: #{e.message}")
       end
 
       private
@@ -32,7 +34,13 @@ module Hix
       end
 
       def response
-        @response ||= Hix::API::SignIn.new.request(email: email, password: password)
+        return @response if defined?(@response)
+
+        @response = Hix::API::SignIn.new.request(email: email, password: password)
+        return @response if @response.code == 200
+        raise("HTTP #{@response.code}") if @response["errors"].nil?
+
+        raise(@response["errors"].map { |msg| "#{msg['status']} \"#{msg['field']}\": #{msg['detail']}" }.join(". "))
       end
     end
   end

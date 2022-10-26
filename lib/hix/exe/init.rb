@@ -29,6 +29,10 @@ module Hix
         Hix::Exe::Config.new(env: argv[0]&.chomp).write
       end
 
+      def deploy
+        Hix::Exe::Deploy.new(template: argv[0]&.chomp, version: argv[1]&.chomp).call
+      end
+
       def login
         Hix::Exe::Login.new(email: argv[0]&.chomp, password: argv[1]&.chomp).call
       end
