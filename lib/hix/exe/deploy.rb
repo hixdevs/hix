@@ -15,9 +15,10 @@ module Hix
           verify_template_path
           write_zip_archive
           bump_template
-          cleanup
         rescue StandardError => e
           err("#{e.class}: #{e.message}")
+        ensure
+          cleanup
         end
       end
 
@@ -69,7 +70,7 @@ module Hix
           zip: "data:@file/zip;base64,#{Base64.strict_encode64(File.read(zip_path))}",
         }
         body[:integrations] = integrations if File.file?(integrations_path)
-        out("Deploying without integrations", :warn, :orange) unless File.file?(integrations_path)
+        out("Deploying without integrations", :warn, :yellow) unless File.file?(integrations_path)
         body
       end
 
