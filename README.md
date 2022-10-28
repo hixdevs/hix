@@ -34,15 +34,31 @@ Setups a project generated via [hix.dev](https://hix.dev) website. To use it:
 
 When `uuid` is ommited, you'll be prompted to provide it.
 
-### Command `hix config {env}`
+## Development
 
-**Note:** This command is for hix maintainers only. Requirements:
+**Note:** The following instructions are for hix maintainers only. Requirements:
 
 1. Connect to the `tzif` VPN.
 2. Run `hix config {env}`.
 
+### Command `bin/local`
+
+Run in the gem directory to install your current development version of the
+`hix` gem locally.
+
+### Command `hix config {env}`
+
 When `env` is ommited, you'll be prompted to provide it. From now on, your `hix`
 commands will communicate with the selected environment's API.
+
+### Command `hix deploy {template-slug} {version}`
+
+To be run inside the template directory (requires `./hix` dir). It creates a zip
+archive named `{version}.zip` and uploads it via hix API to the hix namespace
+selected via `hix config {env}`.
+
+When `template-slug` or `{version}` are ommited, you'll be prompted to provide
+them.
 
 [gem-version]: https://rubygems.org/gems/hix
 [gem-version-img]: https://badge.fury.io/rb/hix.svg

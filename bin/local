@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+version = File.read("VERSION")
+File.write("VERSION", "0.0.0")
+system("gem uninstall hix -x")
+system("gem build hix.gemspec")
+system("gem install --development hix-0.0.0.gem")
+File.write("VERSION", version)
+system("hix version")
